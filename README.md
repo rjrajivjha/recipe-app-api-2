@@ -29,3 +29,10 @@ Recipe API Source code
    - Create .flake8 file to add linting support
    - Fill the details such as which file to lint and which to leave.
 
+5. Run Test
+
+   - ```docker-compose run app sh -c "python manage.py test" ```
+
+6. Create core app
+   - This will hold all the basic logic for core app and act as layer between all sub-apps
+   - `docker-compose run app sh -c "python manage.py startapp core" `
