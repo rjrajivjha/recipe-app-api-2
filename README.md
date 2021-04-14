@@ -36,3 +36,8 @@ Recipe API Source code
 6. Create core app
    - This will hold all the basic logic for core app and act as layer between all sub-apps
    - `docker-compose run app sh -c "python manage.py startapp core" `
+   
+7. Add tests folder
+   - Add tests folder
+   - Create test_models.py
+   
