@@ -36,8 +36,16 @@ Recipe API Source code
 6. Create core app
    - This will hold all the basic logic for core app and act as layer between all sub-apps
    - `docker-compose run app sh -c "python manage.py startapp core" `
+   - Add 'core' to Installed_apps in settings.py file of app project.
    
 7. Add tests folder
    - Add tests folder
    - Create test_models.py
    
+
+8. Create User Model
+   - write a usermanager class with create_user functionality to override baseUserManager
+   - Define a user Model class to override abstractBaseUser
+   - Write models field in user class
+   - Run migrations
+      `docker-compose run app sh -c "python manage.py makemigrations <name_of_app>"`
