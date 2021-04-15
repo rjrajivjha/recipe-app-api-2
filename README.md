@@ -49,3 +49,5 @@ Recipe API Source code
    - Write models field in user class
    - Run migrations
       `docker-compose run app sh -c "python manage.py makemigrations <name_of_app>"`
+     
+9. `docker-compose up` to run docker and run the server
