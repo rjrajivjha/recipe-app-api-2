@@ -55,5 +55,13 @@ Recipe API Source code
 10. Use the following command to create super user to access admin app - 
     `docker-compose run app sh -c "python manage.py createsuperuser"`
     admin@admin.com / Admin@12345
+   
+Create user app 
+11. create a new project
+   `docker-compose run --rm app sh -c "python manage.py startapp user"`
     
-11.
+12. In user app - remove the migration, admin and models (as they will be in core app) and tests file.
+
+13. Go to app.settings.py file and add djangorestframework, users in Installed_apps
+
+14. 
