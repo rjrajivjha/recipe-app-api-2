@@ -14,3 +14,30 @@ class ModelTests(TestCase):
         )
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
+
+    def test_new_user_email_normalized(self):
+        """Test if email is normalized"""
+        email = 'rajiv@GMAIL.COM'
+        password = 'test_pass_123'
+        user = get_user_model().objects.create_user(
+            email=email,
+            password=password
+        )
+        self.assertEqual(user.email, email.lower())
+
+    def test_new_user_invalid_email(self):
+        with self.assertRaises(ValueError):
+            password = 'test_pass_123'
+            get_user_model().objects.create_user(
+                email=None,
+                password=password
+            )
+
+    def test_create_new_super_user(self):
+        """Test creating a new superuser"""
+        user = get_user_model().objects.create_superuser(
+            email='test@rajiv.com',
+            password='test123'
+        )
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
