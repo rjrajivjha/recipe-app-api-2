@@ -51,3 +51,9 @@ Recipe API Source code
       `docker-compose run app sh -c "python manage.py makemigrations <name_of_app>"`
      
 9. `docker-compose up` to run docker and run the server
+
+10. Use the following command to create super user to access admin app - 
+    `docker-compose run app sh -c "python manage.py createsuperuser"`
+    admin@admin.com / Admin@12345
+    
+11.
