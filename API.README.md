@@ -10,3 +10,9 @@ HTTP Method: POST
 
 HTTP Method: POST
 route : api/v1/user/token/
+
+3. Manage User API
+
+HTTP Method : PUT and PATCH
+route : /api/v1/user/my_account/
+headers : authorization : Token <token>

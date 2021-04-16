@@ -57,11 +57,16 @@ Recipe API Source code
     admin@admin.com / Admin@12345
    
 Create user app 
-11. create a new project
+11. create a new app
    `docker-compose run --rm app sh -c "python manage.py startapp user"`
     
 12. In user app - remove the migration, admin and models (as they will be in core app) and tests file.
 
 13. Go to app.settings.py file and add djangorestframework, users in Installed_apps
 
-14. 
+User Management is completed 
+
+Create recipe app 
+14. create a new app
+   `docker-compose run --rm app sh -c "python manage.py startapp user"`
+ 
