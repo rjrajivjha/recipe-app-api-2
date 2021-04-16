@@ -8,4 +8,3 @@ urlpatterns = [
     path('create/', views.CreateUserView.as_view(), name='create'),
 
 ]
-
