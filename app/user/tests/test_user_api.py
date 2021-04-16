@@ -8,6 +8,7 @@ from rest_framework import status
 
 CREATE_USER_URL = reverse('user:create')
 TOKEN_URL = reverse('user:token')
+MY_ACCOUNT_URL = reverse('user:my_account')
 
 
 def create_user(**params):
@@ -96,3 +97,60 @@ class PublicUserApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertNotIn('token', res.data)
+
+    def test_retrieve_user_unauthorized(self):
+        """ Test that authentication is required for users """
+
+        res = self.client.get(MY_ACCOUNT_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
+class PrivateUserApiTest(TestCase):
+    """ Test api requests that require authentication """
+
+    def setUp(self) -> None:
+        payload = {
+            'email': 'test@rajiv.com',
+            'password': 'password@1',
+            'name': 'Rajiv Jha'
+        }
+        self.user = create_user(**payload)
+        self.client = APIClient()
+        self.client.force_authenticate(user=self.user)
+
+    def test_retrieve_profile_success(self):
+        """ Test retrieving profile for logged in user """
+
+        res = self.client.get(MY_ACCOUNT_URL)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, {
+            'name': self.user.name,
+            'email': self.user.email
+        })
+
+    def test_post_my_account_not_allowed(self):
+        """ Test that post is not allowed on the MY_ACCOUNT url """
+        res = self.client.post(MY_ACCOUNT_URL, {})
+
+        self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_update_user_profile(self):
+        """ Test updating the user profile for authenticated user """
+        payload = {
+            'name': 'new name',
+            'password': 'newpassowrd'
+        }
+        res = self.client.patch(MY_ACCOUNT_URL, payload)
+
+        """ refresh from db helper function to update the user
+        with latest data from database
+        put replaces the complete object.
+        patch only updates the value that we provide.
+        """
+
+        self.user.refresh_from_db()
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(self.user.name, payload['name'])
+        self.assertTrue(self.user.check_password(payload['password']))
